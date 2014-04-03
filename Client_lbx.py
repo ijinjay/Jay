@@ -142,7 +142,7 @@ class Ui_Dialog(object):
         filename =  self.receiveFilePath.text()+ '/'  + ReceiveFileName
         filename = str(filename)
         client_command = (action, str(ReceiveFileName))
-        print client_command
+        # print client_command
         if self.confirm(s, client_command):
             f = open(filename, 'wb')
             while True:
@@ -155,12 +155,15 @@ class Ui_Dialog(object):
             QtGui.QMessageBox.about(self.receiveButton,"receive success","receiving is success!")
             self.receiveFilePath.clear()
             self.FileNameEdit.clear()
-            if(fileType == 'jpg' or fileType == 'png' or fileType == 'bmp'):
-                msg = QtGui.QMessageBox() 
-                msg.setIconPixmap(QtGui.QPixmap(filename))
-                msg.exec_()
         else:
             QtGui.QMessageBox.critical(self.receiveButton,"receiving failed","receiving is failed!")
+        if(fileType == 'jpg' or fileType == 'png' or fileType == 'bmp'):
+            msg = QtGui.QMessageBox() 
+            # pic = QtGui.QPixmap(filename)
+            # # picsize = QtGui.QSize(600,800)
+            # pic.scaled(picsize,QtGui.KeepAspectRatio)
+            msg.setIconPixmap(QtGui.QPixmap(filename))
+            msg.exec_()
 
 
     def sendFile(self, Dialog):

@@ -8,6 +8,8 @@ import SocketServer
 import subprocess
 import string
 import time
+import os
+import json
 
 class serverInfo(SocketServer.BaseRequestHandler):
     """docstring for serverInfo"""
@@ -38,10 +40,19 @@ class serverInfo(SocketServer.BaseRequestHandler):
         self.request.send('EOF')
         print "send file success!"
 
+    def sentLists(self):
+        filelists = os.listdir(os.getcwd())
+        listdata = json.dumps(filelists)
+        print type(listdata)
+        self.request.send(listdata)
+
     def handle(self):
         print "get connection from:",self.client_address
         while True:
             try:
+                # send Dir info
+                self.sentLists()
+                # receive inf
                 data = self.request.recv(4096)
                 print "get Data:", data
                 if not data:
@@ -49,8 +60,10 @@ class serverInfo(SocketServer.BaseRequestHandler):
                     break
                 else:
                     action, filename = data.split()
+                    filename = os.path.basename(filename)
                     if action == "put":
                         self.recvFile(filename)
+                        self.sentLists()
                     elif action == "get":
                         self.sendFile(filename)
                     else:
@@ -61,7 +74,7 @@ class serverInfo(SocketServer.BaseRequestHandler):
 
 if __name__ == "__main__":
     host = ''
-    port = 60000
+    port = 13140
     s = SocketServer.ThreadingTCPServer((host,port),serverInfo)
     s.serve_forever()
 
