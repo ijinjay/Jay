@@ -46,7 +46,8 @@
 \subsection{基本过程} % (fold)
 \label{sub:基本过程_}
 \subsubsection{需求概述} % (fold)
-\label{ssub:原始需求_}
+\emph{原始需求}
+
 公司财务系统主要包括：
 \begin{itemize}
 \setlength{\itemsep}{0pt}
@@ -59,7 +60,22 @@
 \item 财务收支管理子系统
 \end{itemize}
 
-公司现有的财务系统能满足日常工作需求，但是性能存在较大问题。并且此次系统开发会基于更安全的新平台进行开发。
+公司现有的财务系统能满足日常工作需求，但是性能存在较大问题。并且此次系统开发会基于更安全的新平台进行开发。故新系统还需具有如下特征：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 公司职员可以根据权限浏览个人的财务管理系统，不会发生越界访问。
+	\item 公司职员财务管理系统能够接受全公司所有人员的共同访问而不发生崩溃，响应时间小于3秒。
+\end{itemize}
+
+\emph{需求分析与规格说明}
+
+财务系统是一个内部联机系统，所有的财务数据都保存在一个中心数据库中。每天由财务处统计更新数据，每月进行一次财务分析，员工可以每天登陆查看个人财务信息。
+
+财务系统的需求规格说明书如表1所示：\\
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+
 % subsubsection 原始需求_ (end)
 % subsection 基本过程_ (end)
 % section 软件过程实现_ (end)
