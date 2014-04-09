@@ -1,0 +1,479 @@
+%!TEX program = xelatex
+%!TEX encoding = UTF-8 unicode
+
+\documentclass[UTF8,nofonts]{ctexart}
+\setCJKmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
+\setCJKsansfont[BoldFont=STHeiti]{STXihei}
+\setCJKmonofont{STFangsong}
+\setcounter{secnumdepth}{5}
+\usepackage[hmarginratio=1:1]{geometry}
+\usepackage{array,float,graphicx}
+\usepackage{pstricks-add}
+%表格style
+\newcolumntype{L}[1]{>{\vspace{0.5em}\begin{minipage}{#1}\raggedright\let\newline\\
+\arraybackslash\hspace{0pt}}m{#1}<{\end{minipage}\vspace{0.5em}}}
+\newcolumntype{R}[1]{>{\vspace{0.5em}\begin{minipage}{#1}\raggedleft\let\newline\\
+\arraybackslash\hspace{0pt}}m{#1}<{\end{minipage}\vspace{0.5em}}}
+\newcolumntype{C}[1]{>{\vspace{0.5em}\begin{minipage}{#1}\centering\let\newline\\
+\arraybackslash\hspace{0pt}}m{#1}<{\end{minipage}\vspace{0.5em}}}
+%section style
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}
+  {-\baselineskip}{0.5\baselineskip}{\fontsize{16pt}{16pt}\bf\leftline}}
+\makeatother
+%代码style
+\usepackage{listings}
+\usepackage{xcolor}
+% 添加页眉页脚
+\usepackage{fancyhdr} 
+%引用style
+\makeatletter
+\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+\makeatother
+\pagestyle{empty}
+%封面
+\title{\Huge 财务系统软件过程模拟\vskip 8cm}
+\author{\large	
+  班级：\underline{软件工程1102班} \\姓名：\underline{\hspace{28pt}靳杰\hspace{30pt}}\hspace{10pt} \\学号：\underline{\hspace{10pt} U201112375 \hspace{10pt}}}
+\date{\Large\today}
+\begin{document}
+\lstset{numbers=left,numberstyle=\tiny,keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},frame=shadowbox,rulesepcolor=\color{red!20!green!20!blue!20}}
+% 封面页
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\thispagestyle{fancy} % IEEE模板在\maketitle后会自动声明\thispagestyle{plain}，
+\lhead{} % 页眉左，需要东西的话就在{}内添加
+\chead{} % 页眉中
+\rhead{} % 页眉右
+\lfoot{} % 页眉左
+\cfoot{} % 页眉中
+\rfoot{\thepage} %页眉右，\thepage 表示当前页码
+\renewcommand{\headrulewidth}{0pt} %改为0pt即可去掉页眉下面的横线
+\renewcommand{\footrulewidth}{0pt} %改为0pt即可去掉页脚上面的横线
+\pagestyle{fancy}
+\rfoot{\thepage}
+% \pagenumberring{arabic}
+\section{问题描述}
+某个公司需要在三个月内完成一个财务系统取代原有的财务系统，原有的财务系统能满足日常工作需求，但是性能存在较大问题，因此希望可以开发出一套基于更安全的新平台的财务系统，并拥有一群开发过旧软件系统的人员，希望文档尽量完备。
+\section{问题分析}
+该公司此次软件项目在原有的旧财务系统需求上加入安全因素和性能需求，故软件系统需求较明确。又因为公司希望开发文档尽量完备，考虑多种软件开发模型，其中瀑布模型以文档为驱动，适用于需求明确的项目，所以初步考虑使用瀑布模型。但是项目时间要求三个月，时间较为紧迫。不过，由于新系统用于取代旧系统，财务系统具有需求明确、一次交付等特征，瀑布模型适用。并且开发人员是由开发过旧系统的人员组成。所以，该软件项目采用瀑布模型。
+\section{软件过程} % (fold)
+\label{sec:软件过程实现_}
+公司开会确定对财务系统进行改进，指派项目经理与开发小组成员，提供项目经费与场地，确定项目交付时间与相关规则后，项目开始。首先进入软件过程基本过程需求阶段。
+\subsection{需求概述} % (fold)
+\subsubsection{原始需求}
+
+开发小组分析公司旧财务系统得出公司财务系统主要包括：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\item 固定资产管理子系统
+\item 流动资产管理子系统
+\item 成本管理子系统
+\item 企业收入管理子系统
+\item 财务收支管理子系统
+\item 员工财务管理子系统
+\end{itemize}
+
+公司现有的财务系统能满足日常工作需求，但是性能存在较大问题。并且此次系统开发会基于更安全的新平台进行开发。故开发小组决定新系统还需具有如下特征：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 公司职员可以根据权限浏览个人的财务管理系统，不会发生越界访问。
+	\item 公司职员财务管理系统能够接受全公司所有人员的共同访问而不发生崩溃，响应时间小于3秒。
+\end{itemize}
+
+\subsubsection{需求分析与规格说明}
+
+通过小组讨论，与员工沟通，开发小组分析得出系统的工作特征：财务系统是一个内部联机系统，所有的财务数据都保存在一个中心数据库中。每天由财务处统计更新数据，每月进行一次财务分析，员工可以每天登陆查看个人财务信息。编写财务系统需求规格说明书，由项目经理签字确认。
+
+财务系统的需求规格说明书如表1所示：\\
+\begin{center}
+	表1 系统需求规格说明书
+\end{center}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+1 概述
+
+本文档描述了财务系统的需求。\\
+1.1现有系统
+
+公司利用现有系统可以完成基本财务记录、系统基于图形界面，能够安装在windows XP及以上版本，但现有系统有如下限制：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 只有财务部门有权限查看、修改财务记录，一般员工需通过财务部门允许才能查看个人信息，且存在可一次查看多人信息的缺陷。
+	\item 公司职员财务管理系统在大批量的访问下有发生崩溃的可能，且响应时间较长。
+\end{itemize}
+1.2待改进开发系统的目标
+
+待开发系统的目标就是针对现有系统的局限性进行完善。这些系统需求不但是汇集了不同层面的用户反馈，同时也是基于过去的缺陷记录和请求给出的。
+
+以下是具体的改进系统的目标。
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 安全性，设置权限管理，普通员工只可访问个人信息资料，财务部门拥有修改，查看所有员工的权限。
+	\item 性能，全体员工共同访问数据库时，不发生崩溃，响应时间小于3秒。
+	\item 重用性。
+\end{itemize}
+2 功能需求\\
+2.1系统需求
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 财务部门可以增删改查财务记录。
+	\item 员工可以查看个人记录。
+	\item 系统可以自动对数据进行清除和存档操作。
+\end{itemize}
+2.2业务操作
+
+系统支持的外部事件：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 进入系统。
+	\item 系统数据的增删改查
+\end{itemize}
+
+系统支持的内部事件：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 定期产生员工财务报告并分发给员工。
+\end{itemize}
+2.3界面
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 登录界面。
+	\item 系统进入界面。
+	\item 生成报告界面。
+	\item 用户注册界面。
+	\item 错误显示界面。
+\end{itemize}
+3 运行环境要求\\
+3.1硬件环境
+
+Oracle服务器，16G内存，1TB硬盘。客户端电脑1G内存，20G硬盘。\\
+3.2软件环境
+
+客户端windows XP及以上系统。SQL服务器7.0以上。\\
+3.3网络环境
+
+未达到预期响应时间，至少需要10Mbps网速。\\
+4 性能需求
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 每次打开系统时间小于等于3秒。
+	\item 保存信息时间小于等于3秒。
+\end{itemize}
+5 验收标准
+
+应满足进入系统、记录财务、查询等相关的所有需求。\\
+6 强制约束
+
+无。\\ 
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+
+\subsubsection{需求变更与跟踪}
+得到需求规格说明书后，项目经理提出对需求变更进行跟踪。
+
+经过讨论，项目经理确认提出变更请求后，需要记录需求变更，分析变更对工作产品的影响。并且由客户（公司员工）和项目经理对分析结果进行评审，并作出答复。已认可的变更申请需监督保证它们的正确实现。明确变更记录通过以下模版定义：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 变更申请号：每种变化都被赋予唯一的一个变更申请号。
+	\item 变更说明：给出对变更的简短描述。
+	\item 影响分析：记录影响范围、需投入的工作量、隐含进度的影响概要总结。
+	\item 变更状态：说明变更需要完成的最后期限。
+	\item 变更需求被批准的时间（如果需要批准的话）。
+\end{itemize}
+
+需求变更存在风险，所以项目经理提出使用跟踪矩阵跟踪需求。需求跟踪模版为：
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 需求编号，需求规格说明书的索引号。
+	\item 描述，需求描述。
+	\item 高层设计文档编号。
+	\item 对应的设计（功能/结构/数据库）。
+	\item 对应的实现（程序段，类，继承类）。
+	\item 单元测试用例。
+	\item 集成/系统测试用例。
+	\item 验收测试用例。
+\end{itemize}
+
+\begin{center}
+	表2 需求跟踪矩阵示例
+\end{center}
+\begin{table*}[hbt]
+\begin{tabular}{|*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}}
+\hline
+需求标号 & 描述 & 高层设计文档编号 & 对应的设计 & 对应的实现 & 单元测试用例 & 集成/系统测试用例 & 验收测试用例 \\
+\hline
+1.2.1 & 响应小于3秒 & 5.3.2 & 数据接收与显示 & 数据收集/显示 & \#12/\#1 & \#20/\#21 & \#11 \\
+\hline
+\end{tabular}
+\end{table*}
+\subsection{设计阶段} % (fold)
+\label{ssub:设计阶段_}
+完成系统需求后，根据需求规格说明书进行系统设计，首先是高层设计阶段（概要设计阶段）。
+\subsubsection{高层设计阶段}
+
+由开发人员根据需求规格说明书，写作功能架构设计文档：
+\begin{center}	
+表3 财务系统功能架构设计文档示例
+\end{center}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+财务系统功能架构设计文档
+
+财务系统是一个B/S架构应用软件，包含3层。
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.界面层：显示页面，运用C++实现，可运行在个人计算机上。
+	\item 2.应用服务器层，中间层，独立于用户和数据库服务器。
+	\item 3.数据库服务层：终端。
+\end{itemize}
+
+客户端是C++开发的可用于32位windows系统的应用程序。服务器端采用Oracle SQL服务器关系数据库管理财务系统数据。数据库设计文档在单独的文档中说明。
+
+\emph{组件}
+
+本系统总共有6个组件,此处只列出其中部分组件，并说明它们包含的类和类中的方法。
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 用户接口组件：返回和存储来自员工的一些参数。类：clientUserGui。方法：getUserParas,showMessage。
+	\item 生成报告组件：返回员工数据报表。类：reportGenerate。方法：generateReport。
+\end{itemize}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+\begin{center}
+	表4 财务系统数据库设计文档示例
+\end{center}
+\begin{table*}[hbt]
+\begin{tabular}{|*{1}{C{0.05\textwidth}|}*{1}{C{0.05\textwidth}|}*{1}{C{0.2\textwidth}|}*{1}{C{0.2\textwidth}|}*{1}{C{0.03\textwidth}|}*{1}{C{0.02\textwidth}|}*{1}{C{0.1\textwidth}|}*{1}{C{0.1\textwidth}|}}
+\hline
+序号 & 主键 & 列名 & 数据类型 & 大小 & 空 & 默认 & 检查约束 \\
+\hline
+1 & Y & ID & CString & 10 & N &   &  \\
+\hline
+2 &   & salary & double &   &  &  & \\
+\hline
+3 &   & apartment & CString & 50 & N & & \\
+\hline
+4 & & enterTime & Datetime & &  & today & \\ 
+\hline
+\end{tabular}
+\end{table*}
+\subsubsection{详细设计阶段}
+完成高层设计后，由开发人员进行详细设计，项目经理监督保障项目进度。详细设计阶段以功能架构设计文档为驱动，进行开发设计，得到详细设计文档如下：
+\begin{center}
+表5 财务系统详细设计文档部分内容示例	
+\end{center}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+Class UserGui 用户接口类\\
+Private Function getUserParams();获取用户输入参数。\\
+Private Function getUserPermissions(CString ID,CString password);获得用户权限。\\
+Private Function generateSQL(CString strSQLExpression,CString Database);创建一个SQL查询。\\
+Private Function getResult();返回结果。\\
+Private Function displayResult();显示结果。\\
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+\subsection{构建与单元测试阶段} % (fold)
+\label{ssub:构建与单元测试_}
+先由开发人员讨论确定编码规范，写入代码评审表中，由项目经理签字确认。代码评审表示例如下表：
+\begin{center}
+	表6 代码评审表示例
+\end{center}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+完整性
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.程序是否满足了规格说明书中给定的条件、功能和补充说明？
+	\item 2.该有的注释是否有？
+	\item 3.所有的设计问题都解决了吗？
+	\item 4.所有的借口问题都处理完了吗？
+	\item 5.所有的边界测试与调试情况都考虑了吗？
+\end{itemize}
+逻辑性与正确性
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.是否检查了所有的输入参数？
+	\item 2.是否检查了下标越界情况？
+	\item 3.错误检查结果是否报告给调用程序了？
+	\item 4.是否满足所有的编码规范和标准？
+	\item 5.使用的变量都声明了吗？
+	\item 6.程序模块化了吗？
+	\item ……
+\end{itemize}
+可靠性、可移植性和一致性
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.性能和效率已经检查了吗？
+	\item 2.代码中使用的字符集及紫的大小是否与平台无关。
+	\item 3.整个系统的遵循的彪马风格一致吗？
+	\item 4.注释与描述的逻辑相符吗？
+	\item 5.错误情况是否可理解和一致的方式被处理。
+\end{itemize}
+可维护性
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.程序代码是否采用缩进格式？
+	\item 2.在程序开始是否有注释说明该程序的功能、作者、调用程序、被调用程序等？
+	\item 3.数据命名是否具有可移植性？
+\end{itemize}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+完成代码评审规则表后，根据详细设计报告，由开发人员进行编码，项目经理掌控项目进度，并且按照代码评审表对代码进行评审。编码示例如下：
+\begin{center}
+	表7 编码示例
+\end{center}
+\begin{lstlisting}[language={[ANSI]C++}]
+class UserGui {
+public:
+	UserGui();
+	~UserGui();
+private:	
+	void getUserParams();// 获取用户参数
+	//获取权限
+	int getUserPermissions(CString ID,CString password);
+	//产生SQL查询语句
+	CString generateSQL(CString strSQLExpression,CString Database);
+	CString getResult();//获取结果
+	void showResult();//显示结果
+};
+\end{lstlisting}
+\subsection{系统测试} % (fold)
+\label{ssub:系统测试_}
+完成编码、代码评审和单元测试后，进行系统测试。因为系统测试包括两个不同的阶段，首先是系统测试计划阶段，然后是系统测试活动，两个阶段的输出不同。所以项目经理在一部分开发人员编码的同时指定其他人进行系统测试计划的制定。并指定系统测试计划应定义测试环境、测试参数和测试流程以及系统的测试结束标准。
+\begin{center}
+	表8 财务系统测试计划部分示例
+\end{center}
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+1.测试环境
+
+1.1硬件
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.服务器：Oracle 服务器，16G，1TB硬盘空间
+	\item 2.客户端：IBM兼容机PC， 4G。
+\end{itemize}
+
+1.2软件
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.数据库服务器：SQL 7.0
+	\item 2.客户机：windows XP及以上版本程序。
+\end{itemize}
+
+1.3安全级别
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+	\item 1.公司财务部有权管理委会整个财务系统。
+	\item 2.员工可以进入，查看个人信息。
+\end{itemize}
+2.测试的特征
+
+2.1用户接口
+
+\begin{table*}[hbt]
+\begin{tabular}{|*{1}{C{0.1\textwidth}|}*{1}{C{0.3\textwidth}|}*{1}{C{0.4\textwidth}|}}
+\hline
+序号 & 被测试条件 & 期望结果 \\
+\hline
+1 & 登录界面 & 所有的登录界面一致 \\
+\hline 
+2 & 接口元素队列 & 可以按序访问 \\
+\hline
+\end{tabular}
+\end{table*}
+
+2.2在所有测试条件下测试客户端PC的操作系统
+
+系统：Windows XP、Windows 7、Windows 8。
+
+\newpage
+2.3一般测试条件
+
+\begin{table*}[hbt]
+\begin{tabular}{|*{1}{C{0.1\textwidth}|}*{1}{C{0.3\textwidth}|}*{1}{C{0.4\textwidth}|}}
+\hline
+序号 & 被测试条件 & 期望结果 \\
+\hline
+1 & 单击所有按键 & 程序能正确响应 \\
+\hline
+\end{tabular}
+\end{table*}
+
+2.4软件接口
+
+\begin{table*}[hbt]
+\begin{tabular}{|*{1}{C{0.1\textwidth}|}*{1}{C{0.3\textwidth}|}*{1}{C{0.4\textwidth}|}}
+\hline
+序号 & 被测试条件 & 期望结果 \\
+\hline
+1 & 中间件引用服务器宕机 & 程序应该能检测这些情况，并给出相应的提示消息。\\
+\hline 
+2 & 数据库服务器宕机 & 向用户显示数据库服务器宕机的消息，并提示用户重试的指令。\\
+\hline
+\end{tabular}
+\end{table*}
+
+2.5安全性检查
+
+\begin{table*}[hbt]
+\begin{tabular}{|*{1}{C{0.1\textwidth}|}*{1}{C{0.3\textwidth}|}*{1}{C{0.4\textwidth}|}}
+\hline
+序号 & 被测试条件 & 期望结果 \\
+\hline
+1 & 使用错误的ID登录 & 系统给出相应的信息，并且不允许用户进入系统 \\
+\hline 
+2 & 提供错误密码 & 提示密码错误，不允许用户进入系统 \\
+\hline
+\end{tabular}
+\end{table*}
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{2pt}
+
+完成了系统测试计划与编码工作后，在系统测试报告和代码的基础上，项目经理宣布开始系统测试，依照项目测试计划对代码进行测试，产生财务系统测试报告及相应的缺陷报告。然后由项目经理安排开发人员对缺陷进行修复，再测试。循环多次的过程中，记录缺陷的状态。
+\subsection{验收与安装} % (fold)
+\label{sub:验收与安装_}
+时间截止日前或测试结果得到了验收标准时，项目经理安排人员进行财务系统的安装，由公司高层进行验收操作。验收结束后，项目开发过程结束。
+% subsection 验收与安装_ (end)
+\section{总结}
+\label{sub:总结_}
+这次大作业完成了一个软件过程的模拟，先是对软件项目进行分析。这次的选题是对一个旧财务系统进行改进，刚开始对系统的模型选择有些不确定。因为瀑布模型对文档要求较高，耗费的时间较多，而题目明确给出了项目的期限要求是三个月，导致自己怀疑是否可以使用瀑布模型，经过对比其他软件过程模型，发现增量模型耗时较少，但是增量模型采用多个增量的行进方法适用于需求不太明确的项目，而且增量模型对文档要求不高，不能产生完备的文档。考虑到开发人员都是开发过现有系统的有经验的成员，加之当前安全的开源软件框架很多，采用瀑布模型也适合这个对时间有严格要求的项目。
+
+接着，对整个软件过程进行一个模拟。先考虑了基本过程的实现，然后将支持过程和组织过程加入基本过程得到一个过程，组后通过文字描述法表达出来。不过，自我感觉对基本过程写的还不错，但是支持过程和组织过程没能很好的加入基本过程，给整个项目模拟带来了瑕疵。
+
+总之，这次软件过程大作业让自己对一个软件项目的软件过程有了深入的理解，自己纸上谈兵的将一个典型的瀑布过程走了一遍，收获较大。
+\end{document}
