@@ -1,3 +1,4 @@
+% 黄金分割法
 % initial environment
 a1 = -0.01;
 a4 = 0.01;
@@ -50,7 +51,7 @@ end
 astar,fstar
 
 
-% 
+% 伟哥自己的二次插值修改 
 e=0.001;
 while 1
 	s1 = (f3 - f2) / (a3 - a2);
