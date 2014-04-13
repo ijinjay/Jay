@@ -78,6 +78,7 @@ while 1
 					f1 = f2;
 					x1 = x + a2 * s;
 					break
+				end
 			else
 				if (a0-a2) < 0
 					if f2 < f0
@@ -88,6 +89,7 @@ while 1
 						a3 = a2; f3 = f2;
 						a2 = a0; f2 = f0;
 						continue
+					end
 				else
 					if f2 < f0
 						a3 = a0;
