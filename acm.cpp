@@ -3,10 +3,8 @@
 #include <string.h>
 #include <time.h>
 // 求子串
-char *substr(char *strdest, char *strsrc, int nindex, int ncount)
-{
-	for(int i=0;i<ncount;i++)
-	{
+char *substr(char *strdest, char *strsrc, int nindex, int ncount) {
+	for(int i=0;i<ncount;i++) {
 		*(strdest+i)=*(strsrc+nindex+i);
 	}
 	strdest[ncount]='\0';
@@ -26,23 +24,6 @@ int main(int argc, char const *argv[]) {
 	srand((int)time(0)); 
 	for (int i = 0; i < 500; ++i) {
 		m[i] = rand()%500;
-	}
-	for (int i = 0; i < 500; ++i) {
-		if (mark[m[i]] == 0) {
-			mark[m[i]] = i;
-		}
-		else {
-			int j = mark[m[i]];
-			j = j+1;
-			if (j >= 500) 
-				j = 0;
-			while(mark[j] != 0) {
-				j ++;
-				if (j >= 500)
-					j = 0;
-			}
-			mark[j] = i;
-		}
 	}
 	// 打开文件，初始化len，data
 	if ((f = fopen("danci.txt","r")) != NULL) {
@@ -78,9 +59,32 @@ int main(int argc, char const *argv[]) {
 		substr(second[i], data, index_r[8*i+3]+1, index_l[8*i+4]-index_r[8*i+3]-1);
 		substr(third[i], data, index_r[8*i+5]+1, index_l[8*i+6]-index_r[8*i+5]-1);
 	}
-	if ((f = fopen("cnew.txt","w+")) != NULL ) {
-		fprintf(f, "%s\n%s\n%s\n", first[0],second[0],third[0]);
+	// 产生随机序列
+	for (int i = 0; i < numbers; ++i) {
+		if (mark[m[i]] == 0) {
+			mark[m[i]] = i;
+		}
+		else {
+			int j = mark[m[i]];
+			j = j+1;
+			if (j >= 500) 
+				j = 0;
+			while(mark[j] != 0) {
+				j ++;
+				if (j >= numbers)
+					j = 0;
+			}
+			mark[j] = i;
+		}
+	}
+	// 存入文件
+	if ((f = fopen("cnew.md","w+")) != NULL ) {
+		fprintf(f, "<table class=\"affix\"><tr> <th>Root, Prefix or Suffix</th> <th>Meaning</th> <th>Examples</th>\n");
+		for (int i = 0; i < numbers; ++i) {
+			fprintf(f, "<tr class='ps0'><td>%s</td><td>%s</td><td>%s</td><tr>\n", first[mark[i]], second[mark[i]],third[mark[i]]);
+		}
 		fclose(f);
+		printf("Success,to beautiful you~\n");
 	}
 	getchar();
 	getchar();
