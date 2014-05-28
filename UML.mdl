@@ -11,7 +11,43 @@
 	(object Attribute
 	    tool       	"Java"
 	    name       	"IDE"
-	    value      	"Internal Editor"))
+	    value      	"Internal Editor")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagName1"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagText1"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagApply1"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagName2"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagText2"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagApply2"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagName3"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagText3"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagApply3"
+	    value      	""))
     quid       	"5385C1CA002A"
     enforceClosureAutoLoad 	FALSE
     defaults   	(object defaults
@@ -59,14 +95,101 @@
 	subsystem  	"Component View"
 	quidu      	"5385C1CA002D"
 	logical_models 	(list unit_reference_list
-	    (object Class "SBRU"
-		quid       	"5385C1F5039D")
+	    (object Class "Room"
+		quid       	"5385C20103D8"
+		documentation 	
+|房间
+|------数据词典------
+|某个Hotel的某个房间，一个Hotel可以有多个Room。Room可以有多个不同的状态。
+|--------------------
+		)
+	    (object Class "HotelOperator"
+		quid       	"5385C209032F"
+		documentation 	
+|宾馆操作员
+|------数据词典------
+|提供房间信息，接收预定房间列表。
+|--------------------
+		)
+	    (object Class "Procurator"
+		quid       	"5385C37401B9"
+		documentation 	
+|代理人
+|------数据词典------
+|接收SBRU的房间列表，接收学生的订单，提交学生的请求给SBRU。
+|--------------------
+		)
+	    (object Class "ConfirmNotice"
+		quid       	"5385C8A80124"
+		documentation 	
+|通知
+|------数据词典------
+|SBRU产生，通过email或手机短信发送给学生。
+|--------------------
+		)
+	    (object Class "Booklet"
+		quid       	"5385C8C303E5"
+		documentation 	
+|列表
+|------数据词典------
+|有SBRU提供，给代理人的宾馆信息表。
+|--------------------
+		)
 	    (object Class "Student"
-		quid       	"5385C20103D8")
+		quid       	"5385C96003BB"
+		documentation 	
+|学生
+|------数据词典------
+|姓名、Email、电话号码、请求
+		)
+	    (object Class "ReserveOrder"
+		quid       	"5385CB1C014B"
+		documentation 	
+|学生的请求
+|------数据词典------
+|学生产生的住房请求，送给代理人。
+|--------------------
+		)
+	    (object Class "SBRUAdministrator"
+		quid       	"5385CCEC03DB"
+		documentation 	
+|管理者
+|------数据词典------
+|负责生成小册子。发送确认通知。
+|--------------------
+		)
+	    (object Class "StudentGroup"
+		quid       	"5385D0AE01B3"
+		documentation 	
+|学生小组
+|------数据词典------
+|与学生类似，提供订单，确认通知，住宿。
+|--------------------
+		)
 	    (object Class "Hotel"
-		quid       	"5385C209032F")
-	    (object Class "Agent"
-		quid       	"5385C37401B9"))
+		quid       	"5385D21601BC"
+		documentation 	
+|宾馆
+|------数据词典------
+|包括房间信息。
+|--------------------
+		)
+	    (object Class "InfomationList"
+		quid       	"5385D56C00A5"
+		documentation 	
+|宾馆提供的信息
+|------数据词典------
+|有宾馆提供给SBRU。
+|--------------------
+		)
+	    (object Class "ReservedRoomList"
+		quid       	"5385D70D021E"
+		documentation 	
+|预订房间列表
+|------数据词典------
+|有SBRU提供给宾馆。
+|--------------------
+		))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"5385C1D002DF"
@@ -74,14 +197,14 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	0
-		origin_y   	0
+		origin_x   	68
+		origin_y   	1306
 		items      	(list diagram_item_list
-		    (object ClassView "Class" "Logical View::Student" @1
+		    (object ClassView "Class" "Logical View::Room" @1
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(237, 468)
+			location   	(1179, 1256)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -93,25 +216,24 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@1
-			    location   	(149, 417)
+			    location   	(1098, 1205)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	176
+			    max_width  	162
 			    justify    	0
-			    label      	"Student")
+			    label      	"Room")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"5385C20103D8"
-			width      	194
 			height     	126
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::Hotel" @2
+		    (object ClassView "Class" "Logical View::HotelOperator" @2
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1250, 481)
+			location   	(700, 996)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -123,24 +245,25 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@2
-			    location   	(1169, 430)
+			    location   	(556, 945)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	162
+			    max_width  	288
 			    justify    	0
-			    label      	"Hotel")
+			    label      	"HotelOperator")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"5385C209032F"
+			width      	306
 			height     	126
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::Agent" @3
+		    (object ClassView "Class" "Logical View::ConfirmNotice" @3
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(718, 475)
+			location   	(768, 1281)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -152,16 +275,286 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@3
-			    location   	(637, 424)
+			    location   	(627, 1230)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	162
+			    max_width  	282
 			    justify    	0
-			    label      	"Agent")
+			    label      	"ConfirmNotice")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385C8A80124"
+			width      	300
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Booklet" @4
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1256, 1484)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@4
+			    location   	(1169, 1433)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	174
+			    justify    	0
+			    label      	"Booklet")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385C8C303E5"
+			width      	192
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Student" @5
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(371, 1356)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@5
+			    location   	(283, 1305)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	176
+			    justify    	0
+			    label      	"Student")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385C96003BB"
+			width      	194
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Procurator" @6
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(388, 1175)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@6
+			    location   	(274, 1124)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	228
+			    justify    	0
+			    label      	"Procurator")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"5385C37401B9"
+			width      	246
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::ReserveOrder" @7
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(723, 1771)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@7
+			    location   	(584, 1720)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	278
+			    justify    	0
+			    label      	"ReserveOrder")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385CB1C014B"
+			width      	296
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::SBRUAdministrator" @8
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(734, 762)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@8
+			    location   	(540, 711)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	388
+			    justify    	0
+			    label      	"SBRUAdministrator")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385CCEC03DB"
+			width      	406
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::StudentGroup" @9
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(295, 1609)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@9
+			    location   	(153, 1558)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	284
+			    justify    	0
+			    label      	"StudentGroup")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385D0AE01B3"
+			width      	302
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Hotel" @10
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1086, 1043)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@10
+			    location   	(1005, 992)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	162
+			    justify    	0
+			    label      	"Hotel")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385D21601BC"
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::InfomationList" @11
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1147, 1762)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@11
+			    location   	(1006, 1711)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	282
+			    justify    	0
+			    label      	"InfomationList")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385D56C00A5"
+			width      	300
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::ReservedRoomList" @12
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(754, 1496)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@12
+			    location   	(568, 1445)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	372
+			    justify    	0
+			    label      	"ReservedRoomList")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5385D70D021E"
+			width      	390
 			height     	126
 			annotation 	8
 			autoResize 	TRUE)))))
